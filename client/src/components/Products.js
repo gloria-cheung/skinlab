@@ -1,7 +1,10 @@
 import { Row } from "react-bootstrap";
 import ProductItem from "./ProductItem";
+import "./Products.scss";
 
-const Products = () => {
+const Products = (props) => {
+  const { home } = props;
+
   const fakeData = [
     {
       id: 1,
@@ -43,17 +46,37 @@ const Products = () => {
 
   return (
     <>
-      <h2
-        style={{
-          textTransform: "uppercase",
-          fontWeight: "600",
-          letterSpacing: "0.3em",
-          textAlign: "center",
-          color: "#8a817c",
-        }}
-      >
-        Featured Items
-      </h2>
+      {home ? (
+        <h2 className="basicHeader">Featured Items</h2>
+      ) : (
+        <header className="productsPageHeader">
+          <h2 className="basicHeader">Acne</h2>
+          <div id="filterSortContainer">
+            <div className="leftContainer">
+              <h5>Filter Products:</h5>
+              <select name="clean" id="filter-clean">
+                <option value="">Clean</option>
+                <option value="crueltyfree">Cruelty Free</option>
+              </select>
+              <select name="size" id="filter-size">
+                <option value="">Size</option>
+                <option value="travel">Travel Size</option>
+                <option value="regular">Regular Size</option>
+                <option value="value">Value Size</option>
+              </select>
+            </div>
+            <div className="rightContainer">
+              <h5>Sort Products:</h5>
+              <select name="sort" id="sort-newest">
+                <option value="">Sort By</option>
+                <option value="travel">Newest</option>
+                <option value="regular">Price (low-high)</option>
+                <option value="value">Price (high-low)</option>
+              </select>
+            </div>
+          </div>
+        </header>
+      )}
       <Row className="ms-1 me-1">{products}</Row>
     </>
   );
