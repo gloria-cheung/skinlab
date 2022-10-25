@@ -18,3 +18,8 @@ $theme-colors: (
   color: #003249;
   font-family: "Urbanist", sans-serif;
 }
+@mixin mobile {
+  @media (max-width: #{576px}) {
+    @content
+  }
+}
