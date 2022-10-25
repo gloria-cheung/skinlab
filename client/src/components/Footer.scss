@@ -1,0 +1,56 @@
+@import "../App.scss";
+
+.footer {
+  background-color: #463f3a;
+  display: flex;
+  color: #f4f3ee;
+
+  @include mobile {
+    flex-direction: column;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+  .descriptionContainer {
+    padding: 1em;
+    flex: 3.5;
+    p {
+      font-weight: 300;
+    }
+
+    @include mobile {
+      border-bottom: 0.8px solid #f4f3ee;
+    }
+  }
+
+  .linksContainer {
+    padding: 1em;
+    flex: 3;
+
+    div {
+      display: flex;
+
+      .linkListItem {
+        background-color: #463f3a;
+        color: #f4f3ee;
+        font-weight: 300;
+      }
+    }
+
+    @include mobile {
+      border-bottom: 0.8px solid #f4f3ee;
+    }
+  }
+
+  .contactContainer {
+    padding: 1em;
+    flex: 2.5;
+    display: flex;
+    flex-direction: column;
+    span {
+      margin-top: 1em;
+      font-weight: 300;
+    }
+  }
+}
