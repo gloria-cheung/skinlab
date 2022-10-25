@@ -5,12 +5,13 @@ import "./Topbar.scss";
 const Topbar = () => {
   return (
     <Navbar
-      bg="light"
+      bg="dark"
+      variant="dark"
       expand="lg"
       sticky="top"
       className="ps-3 pe-3 justify-content-between"
     >
-      <Navbar.Brand>Skin Lab</Navbar.Brand>
+      <Navbar.Brand>SKIN LAB.</Navbar.Brand>
       <Form className="w-50">
         <InputGroup className="searchBar">
           <InputGroup.Text id="basic-addon1">
