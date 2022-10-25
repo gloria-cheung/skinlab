@@ -43,6 +43,17 @@ const Products = () => {
 
   return (
     <>
+      <h2
+        style={{
+          textTransform: "uppercase",
+          fontWeight: "600",
+          letterSpacing: "0.3em",
+          textAlign: "center",
+          color: "#8a817c",
+        }}
+      >
+        Featured Items
+      </h2>
       <Row className="ms-1 me-1">{products}</Row>
     </>
   );
