@@ -1,6 +1,5 @@
 import { Container, Row } from "react-bootstrap";
 import CategoryItem from "./CategoryItem";
-import {} from "@material-ui/icons";
 
 const Categories = () => {
   const fakeData = [
@@ -27,7 +26,7 @@ const Categories = () => {
   ));
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 mb-5">
       <Row>{categories}</Row>
     </Container>
   );
