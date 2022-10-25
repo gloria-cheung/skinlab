@@ -1,0 +1,52 @@
+@import "../App.scss";
+
+.basicHeader {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-align: center;
+  color: #8a817c;
+}
+
+.productsPageHeader {
+  padding: 1em;
+  color: #8a817c;
+  #filterSortContainer {
+    display: flex;
+    justify-content: space-between;
+    color: #463f3a;
+  
+    @include mobile {
+      flex-direction: column;
+    }
+    .leftContainer {
+      display: flex;
+      align-items: flex-start;
+
+      @include mobile {
+        h5 {
+          font-size: 18px
+        };
+      }
+
+      select {
+        border-radius: 10px;
+      }
+    }
+  
+    .rightContainer {
+      display: flex;
+      align-items: flex-start;
+
+      @include mobile {
+        h5 {
+          font-size: 18px
+        };
+      }
+      
+      select {
+        border-radius: 10px;
+      }
+    }
+  }
+}
