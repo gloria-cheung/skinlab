@@ -1,12 +1,13 @@
 import Topbar from "../components/Topbar";
 import Announcement from "../components/Announcement";
+import Slider from "../components/Slider";
 const Home = () => {
   return (
-    <div>
+    <>
       <Announcement />
       <Topbar />
-      homepage
-    </div>
+      <Slider />
+    </>
   );
 };
 
