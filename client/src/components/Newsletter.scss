@@ -1,0 +1,18 @@
+@import "../App.scss";
+
+#newsletter {
+  margin-top: 3em;
+  text-align: center;
+  width: 50%;
+  h2 {
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+  }
+  h5 {
+    font-weight: 300;
+  }
+  @include mobile {
+    width: 80%;
+  }
+}
