@@ -1,0 +1,18 @@
+.carouselImg {
+  height: 75vh;
+  object-fit: cover;
+}
+#carouselCaption{
+  bottom: 30%;
+
+  h2 {
+    font-weight: 700;
+  }
+
+  h2,h4 {
+    color: #463f3a;
+    margin-top: 1em;
+    text-transform: uppercase;
+  }
+  
+}
