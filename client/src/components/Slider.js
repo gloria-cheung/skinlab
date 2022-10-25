@@ -1,5 +1,4 @@
 import { Carousel, Button } from "react-bootstrap";
-import {} from "@material-ui/icons";
 import "./Slider.scss";
 
 const Slider = () => {

@@ -1,5 +1,4 @@
 import { Card, Col, Button } from "react-bootstrap";
-import {} from "@material-ui/icons";
 import "./CategoryItem.scss";
 
 const CategoryItem = (props) => {
