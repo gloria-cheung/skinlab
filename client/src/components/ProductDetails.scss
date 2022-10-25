@@ -1,0 +1,48 @@
+@import "../App.scss";
+
+.productDetailsContainer {
+  @include mobile {
+    flex-direction: column;
+  }
+  .leftContainer {
+    flex: 6;
+  
+    .productImg {
+      width: 100%;
+    }
+  }
+  .rightContainer {
+    flex:6;
+    padding-left: 1em;
+  
+    h2 {
+      color: #8a817c;
+
+      @include mobile {
+        margin-top: 1em;
+      }
+    }
+  
+    p {
+      color: #463f3a;
+    }
+  
+    select {
+      border-radius: 10px;
+      padding: 0.5em;
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+  
+   .cartButtons {
+    display: flex;
+  
+      .addRemove {
+        margin-right: 1em;
+        span {
+          padding: 1em;
+        }
+      }
+   }
+  }
+}
