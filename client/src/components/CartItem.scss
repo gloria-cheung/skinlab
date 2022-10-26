@@ -1,0 +1,65 @@
+@import "../App.scss";
+
+.cartBody {
+  display: flex;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+
+  
+  .leftCart {
+    flex: 2;
+    img {
+      width: 12rem;
+      height: 12rem;
+      object-fit: cover;
+    }
+  }
+  
+  .middleCart {
+    flex: 6;
+    padding-left: 1em;
+
+    @include mobile {
+      p {
+        margin-bottom: 0.5em;
+      }
+    }
+
+    .bottomCartMobile {
+      display: none;
+      @include mobile {
+        display: flex;
+        justify-content: space-between;
+
+        .addRemove {
+          margin-right: 1em;
+          span {
+            padding: 1em;
+          }
+        }
+      }
+    }
+  }
+  
+  .rightCart {
+    flex: 2;
+
+    @include mobile {
+      display: none;
+    }
+
+    .addRemove {
+      margin-right: 1em;
+      span {
+        padding: 1em;
+      }
+    }
+
+    .cartItemPrice {
+      font-size: 22px;
+      padding-top: 1em;
+      font-weight: 600;
+      color: #463f3a;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.orderSummaryTitle {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #8a817c;
+}
+
+.orderSummaryLine {
+  display: flex;
+  justify-content: space-between;
+
+  &.orderSummaryTotal {
+    font-weight: 600;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-bottom: 1.3em;
+  }
+}
+
+.checkoutButton {
+  text-transform: uppercase;
+}

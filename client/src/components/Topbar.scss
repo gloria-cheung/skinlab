@@ -1,3 +1,5 @@
+@import "../App.scss";
+
 .searchBar {
   input {
     border: none;
@@ -27,5 +29,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @include mobile {
+      left: 13px;
+    }
   }
 }
