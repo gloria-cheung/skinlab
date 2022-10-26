@@ -1,4 +1,5 @@
 import { Card, Col, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./CategoryItem.scss";
 
 const CategoryItem = (props) => {
@@ -10,9 +11,11 @@ const CategoryItem = (props) => {
         <Card.Img src={img} alt="category" className="categoryImg" />
         <Card.ImgOverlay className="categoryTextContainer p-0">
           <Card.Title as="h2">{title}</Card.Title>
-          <Button size="sm" variant="light">
-            Shop Now
-          </Button>
+          <Link to="/productlist/c">
+            <Button size="sm" variant="light">
+              Shop Now
+            </Button>
+          </Link>
         </Card.ImgOverlay>
       </Card>
     </Col>

@@ -14,10 +14,13 @@ $theme-colors: (
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-.App {
-  color: #003249;
+* {
   font-family: "Urbanist", sans-serif;
 }
+a {
+  text-decoration: none;
+}
+
 @mixin mobile {
   @media (max-width: #{576px}) {
     @content

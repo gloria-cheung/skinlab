@@ -5,6 +5,7 @@ import {
   Search,
 } from "@material-ui/icons";
 import "./ProductItem.scss";
+import { Link } from "react-router-dom";
 
 const ProductItem = (props) => {
   const { img } = props;
@@ -16,7 +17,9 @@ const ProductItem = (props) => {
         <div className="productItemIcons">
           <FavoriteBorderOutlined className="productItemIcon" />
           <ShoppingCartOutlined className="productItemIcon" />
-          <Search className="productItemIcon" />
+          <Link to="/product/d">
+            <Search className="productItemIcon" />
+          </Link>
         </div>
       </Card>
     </Col>
