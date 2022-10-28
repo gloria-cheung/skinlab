@@ -8,7 +8,7 @@ import "./ProductItem.scss";
 import { Link } from "react-router-dom";
 
 const ProductItem = (props) => {
-  const { img } = props;
+  const { img, _id } = props;
 
   return (
     <Col lg={3} className="p-1">
@@ -17,7 +17,7 @@ const ProductItem = (props) => {
         <div className="productItemIcons">
           <FavoriteBorderOutlined className="productItemIcon" />
           <ShoppingCartOutlined className="productItemIcon" />
-          <Link to="/product/d">
+          <Link to={`/product/${_id}`}>
             <Search className="productItemIcon" />
           </Link>
         </div>
