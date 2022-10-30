@@ -17,7 +17,6 @@ const Products = (props) => {
           ? await axios.get(`/products?category=${category}`)
           : await axios.get("/products");
 
-        console.log(res.data);
         setProducts(res.data);
       } catch (err) {
         console.log(err);
