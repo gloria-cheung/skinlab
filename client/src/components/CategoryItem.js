@@ -11,7 +11,7 @@ const CategoryItem = (props) => {
         <Card.Img src={img} alt="category" className="categoryImg" />
         <Card.ImgOverlay className="categoryTextContainer p-0">
           <Card.Title as="h2">{title}</Card.Title>
-          <Link to="/productlist/c">
+          <Link to={`/productlist/${title.toLowerCase()}`}>
             <Button size="sm" variant="light">
               Shop Now
             </Button>
