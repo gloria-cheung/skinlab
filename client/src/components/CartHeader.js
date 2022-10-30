@@ -1,4 +1,5 @@
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./CartHeader.scss";
 
 const CartHeader = () => {
@@ -6,7 +7,9 @@ const CartHeader = () => {
     <div className="cartHeader">
       <h2>Your Bag</h2>
       <div className="cartHeaderDetails">
-        <Button variant="secondary">Continue Shopping</Button>
+        <Link to="/">
+          <Button variant="secondary">Continue Shopping</Button>
+        </Link>
         <span>Shopping Bag(2)</span>
         <span>Your Wishlist(0)</span>
         <Button variant="dark">Checkout Now</Button>
