@@ -26,6 +26,25 @@ const Products = (props) => {
     fetchData();
   }, [category]);
 
+  const sortHandler = (e) => {
+    if (e.target.value === "new") {
+      const sortedProducts = [...products].sort((p1, p2) => {
+        return new Date(p2.createdAt) - new Date(p1.createdAt);
+      });
+      setProducts(sortedProducts);
+    } else if (e.target.value === "priceLow") {
+      const sortedProducts = [...products].sort((p1, p2) => {
+        return p1.price - p2.price;
+      });
+      setProducts(sortedProducts);
+    } else if (e.target.value === "priceHigh") {
+      const sortedProducts = [...products].sort((p1, p2) => {
+        return p2.price - p1.price;
+      });
+      setProducts(sortedProducts);
+    }
+  };
+
   return (
     <>
       {home ? (
@@ -49,11 +68,17 @@ const Products = (props) => {
             </div>
             <div className="rightContainer">
               <h5>Sort Products:</h5>
-              <select name="sort" id="sort-newest">
+              <select
+                name="sort"
+                id="sort-newest"
+                onChange={(e) => {
+                  sortHandler(e);
+                }}
+              >
                 <option value="">Sort By</option>
-                <option value="travel">Newest</option>
-                <option value="regular">Price (low-high)</option>
-                <option value="value">Price (high-low)</option>
+                <option value="new">Newest</option>
+                <option value="priceLow">Price (low-high)</option>
+                <option value="priceHigh">Price (high-low)</option>
               </select>
             </div>
           </div>
