@@ -2,8 +2,11 @@ import { Nav, Navbar, Form, InputGroup } from "react-bootstrap";
 import { ShoppingCartOutlined, Search } from "@material-ui/icons";
 import "./Topbar.scss";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Topbar = () => {
+  const cart = useSelector((state) => state.cart);
+
   return (
     <Navbar
       bg="dark"
@@ -39,7 +42,7 @@ const Topbar = () => {
           <Link to="/cart">
             <Nav.Link as="span" href="#link" className="shoppingCartContainer">
               <ShoppingCartOutlined />
-              <span className="badge">2</span>
+              <span className="badge">{cart.quantity}</span>
             </Nav.Link>
           </Link>
         </Nav>
