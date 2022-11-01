@@ -9,6 +9,8 @@ import { useDispatch } from "react-redux";
 const ProductDetails = () => {
   const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState();
+  const [price, setPrice] = useState();
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -17,6 +19,9 @@ const ProductDetails = () => {
       try {
         const res = await axios.get(`/products/${id}`);
         setProduct(res.data);
+        // default to regular size and price
+        setPrice(res.data.price[1]);
+        setSize(res.data.size[1]);
       } catch (err) {
         console.log(err);
       }
@@ -35,9 +40,21 @@ const ProductDetails = () => {
   };
 
   const handleClick = () => {
-    dispatch(addProduct({ ...product, quantity }));
+    dispatch(addProduct({ ...product, quantity, size, price }));
   };
-
+  const handleSize = (e) => {
+    if (e.target.value === "regular") {
+      setSize("regular");
+      setPrice(product.price[1]);
+    } else if (e.target.value === "travel") {
+      setSize("travel");
+      setPrice(product.price[0]);
+    } else if (e.target.value === "value") {
+      setSize("value");
+      setPrice(product.price[2]);
+    }
+  };
+  console.log(product);
   return (
     <Container className="d-flex mt-5 productDetailsContainer">
       {product && (
@@ -48,8 +65,13 @@ const ProductDetails = () => {
           <div className="rightContainer">
             <h2>{product.title}</h2>
             <p>{product.desc}</p>
-            <h4>${product.price}</h4>
-            <select name="size" id="filter-size">
+            <h4>${price}</h4>
+            <select
+              name="size"
+              id="filter-size"
+              onChange={(e) => handleSize(e)}
+              defaultValue={"regular"}
+            >
               <option value="">Size</option>
               <option value="travel">Travel Size</option>
               <option value="regular">Regular Size</option>
