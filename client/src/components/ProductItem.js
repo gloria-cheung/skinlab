@@ -14,7 +14,7 @@ const ProductItem = (props) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(addProduct({ product: props, quantity: 1, price }));
+    dispatch(addProduct({ ...props, quantity: 1 }));
   };
   return (
     <Col lg={3} className="p-1">
