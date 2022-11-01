@@ -3,10 +3,14 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./ProductDetails.scss";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState();
+  const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +23,20 @@ const ProductDetails = () => {
     };
     fetchData();
   }, [id]);
+
+  const handleAddQuantity = () => {
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+  };
+
+  const handleSubtractQuantity = () => {
+    const newQuantity = quantity - 1;
+    setQuantity(newQuantity);
+  };
+
+  const handleClick = () => {
+    dispatch(addProduct({ product, quantity, price: product.price }));
+  };
 
   return (
     <Container className="d-flex mt-5 productDetailsContainer">
@@ -39,11 +57,17 @@ const ProductDetails = () => {
             </select>
             <div className="cartButtons">
               <div className="addRemove">
-                <Button variant="light">-</Button>
-                <span>1</span>
-                <Button variant="light">+</Button>
+                <Button variant="light" onClick={handleSubtractQuantity}>
+                  -
+                </Button>
+                <span>{quantity}</span>
+                <Button variant="light" onClick={handleAddQuantity}>
+                  +
+                </Button>
               </div>
-              <Button variant="secondary">Add to Cart</Button>
+              <Button variant="secondary" onClick={handleClick}>
+                Add to Cart
+              </Button>
             </div>
           </div>
         </>
