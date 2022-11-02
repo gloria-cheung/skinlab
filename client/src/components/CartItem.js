@@ -2,7 +2,7 @@ import { Container, Button } from "react-bootstrap";
 import "./CartItem.scss";
 
 const CartItem = (props) => {
-  const { _id, title, price, size, img } = props;
+  const { _id, title, price, size, img, quantity } = props;
 
   return (
     <Container className="cartBody">
@@ -31,7 +31,7 @@ const CartItem = (props) => {
       <div className="rightCart">
         <div className="addRemove">
           <Button variant="light">-</Button>
-          <span>1</span>
+          <span>{quantity}</span>
           <Button variant="light">+</Button>
         </div>
         <div className="cartItemPrice">${price}</div>
