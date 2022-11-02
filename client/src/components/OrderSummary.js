@@ -7,7 +7,7 @@ const OrderSummary = () => {
 
   return (
     <>
-      {total ? (
+      {Math.round(total) ? (
         <Card className="border-0">
           <Card.Body>
             <Card.Title className="orderSummaryTitle mb-4">
