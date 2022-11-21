@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import Topbar from "../components/Topbar";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -12,10 +13,38 @@ import {
   Container,
 } from "react-bootstrap";
 import "./Register.scss";
+import axios from "axios";
 
 const Register = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState(null);
+  const first_name = useRef();
+  const last_name = useRef();
+  const email = useRef();
+  const password = useRef();
+  const confirmPassword = useRef();
+
+  const history = useHistory();
+
+  const clickHandler = async (e) => {
+    e.preventDefault();
+    // add validation to see if password matches confirm password
+    if (password.current.value !== confirmPassword.current.value) {
+      password.current.setCustomValidity("Passwords don't match");
+    } else {
+      try {
+        const res = await axios.post("/auth/register", {
+          first_name: first_name.current.value,
+          last_name: last_name.current.value,
+          email: email.current.value,
+          password: password.current.value,
+        });
+        history.push(`/`);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   return (
     <>
@@ -30,12 +59,20 @@ const Register = () => {
             </h3>
           </Col>
           <Col md={6}>
-            <Form className="pb-3">
+            <Form className="pb-3" onSubmit={clickHandler}>
               <Form.Control
                 className="mt-3 mb-3"
                 type="text"
-                placeholder="Username"
+                placeholder="First Name"
                 required
+                ref={first_name}
+              />
+              <Form.Control
+                className="mt-3 mb-3"
+                type="text"
+                placeholder="Last Name"
+                required
+                ref={last_name}
               />
 
               <Form.Control
@@ -43,6 +80,7 @@ const Register = () => {
                 type="email"
                 placeholder="Email"
                 required
+                ref={email}
               />
 
               <Form.Control
@@ -51,6 +89,7 @@ const Register = () => {
                 placeholder="Password"
                 required
                 min={6}
+                ref={password}
               />
               <Form.Control
                 className="mt-3 mb-3"
@@ -58,6 +97,7 @@ const Register = () => {
                 placeholder="Confirm Password"
                 required
                 min={6}
+                ref={confirmPassword}
               />
 
               <div className="d-grid gap-2">

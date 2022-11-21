@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import Topbar from "../components/Topbar";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -11,11 +12,28 @@ import {
   Alert,
   Container,
 } from "react-bootstrap";
+import axios from "axios";
 import "./Login.scss";
 
 const Login = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState(null);
+  const email = useRef();
+  const password = useRef();
+  const history = useHistory();
+
+  const clickHandler = async (e) => {
+    try {
+      e.preventDefault();
+      const res = await axios.post("/auth/login", {
+        email: email.current.value,
+        password: password.current.value,
+      });
+      history.push("/");
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -30,12 +48,13 @@ const Login = () => {
             </h3>
           </Col>
           <Col md={6}>
-            <Form className="pb-3">
+            <Form className="pb-3" onSubmit={clickHandler}>
               <Form.Control
                 className="mt-3 mb-3"
                 type="email"
                 placeholder="Email"
                 required
+                ref={email}
               />
 
               <Form.Control
@@ -44,6 +63,7 @@ const Login = () => {
                 placeholder="Password"
                 minLength={6}
                 required
+                ref={password}
               />
 
               <div className="d-grid gap-2">
