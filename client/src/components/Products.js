@@ -14,10 +14,10 @@ const Products = (props) => {
     const fetchData = async () => {
       try {
         const res = category
-          ? await axios.get(`/products?category=${category}`)
-          : await axios.get("/products");
+          ? await axios.get(`/categories/${category}`)
+          : await axios.get("/categories/featured");
 
-        setProducts(res.data);
+        setProducts(res.data.products);
       } catch (err) {
         console.log(err);
       }
@@ -26,6 +26,7 @@ const Products = (props) => {
     fetchData();
   }, [category]);
 
+  console.log(products);
   const sortHandler = (e) => {
     if (e.target.value === "new") {
       const sortedProducts = [...products].sort((p1, p2) => {
@@ -86,7 +87,7 @@ const Products = (props) => {
       )}
       <Row className="ms-1 me-1">
         {products &&
-          products.map((item) => <ProductItem key={item._id} {...item} />)}
+          products.map((item) => <ProductItem key={item.id} {...item} />)}
       </Row>
     </>
   );
