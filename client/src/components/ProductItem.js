@@ -10,7 +10,7 @@ import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
 
 const ProductItem = (props) => {
-  const { img, _id, price } = props;
+  const { img_url, id, price } = props;
   const dispatch = useDispatch();
 
   const handleClick = () => {
@@ -21,14 +21,14 @@ const ProductItem = (props) => {
   return (
     <Col lg={3} className="p-1">
       <Card className="productItemContainer">
-        <img src={img} alt="productitem" className="productItem" />
+        <img src={img_url} alt="productitem" className="productItem" />
         <div className="productItemIcons">
           <FavoriteBorderOutlined className="productItemIcon" />
           <ShoppingCartOutlined
             className="productItemIcon"
             onClick={handleClick}
           />
-          <Link to={`/product/${_id}`}>
+          <Link to={`/product/${id}`}>
             <Search className="productItemIcon" />
           </Link>
         </div>
