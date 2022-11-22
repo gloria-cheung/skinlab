@@ -1,49 +1,56 @@
 import { Container, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import {
-  updateProductAddOne,
-  updateProductSubtractOne,
-} from "../redux/cartRedux";
+import axios from "axios";
 import "./CartItem.scss";
 
 const CartItem = (props) => {
-  const { _id, title, price, size, img, quantity } = props;
-  const dispatch = useDispatch();
+  const { id, product, quantity, updateCart } = props;
 
-  const handleAddQuantity = () => {
-    dispatch(updateProductAddOne({ ...props, quantity: quantity + 1 }));
+  const handleAddQuantity = async () => {
+    try {
+      await axios.patch(`/cart_items/${id}`, {
+        quantity: quantity + 1,
+      });
+      updateCart();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handleMinusQuantity = () => {
-    dispatch(updateProductSubtractOne({ ...props, quantity: quantity - 1 }));
+  const handleMinusQuantity = async () => {
+    try {
+      await axios.patch(`/cart_items/${id}`, {
+        quantity: quantity - 1,
+      });
+      updateCart();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <Container className="cartBody">
       <div className="leftCart">
-        <img src={img} alt={title} />
+        <img src={product.img_url} alt={product.name} />
       </div>
       <div className="middleCart">
         <p>
-          <b>Product:</b> {title}
+          <b>Product:</b> {product.name}
         </p>
         <p>
-          <b>ID:</b> {_id}
+          <b>ID:</b> {product.id}
         </p>
-        <p>
-          <b>Size:</b> {size}
-        </p>
+
         <div className="bottomCartMobile">
           <div className="addRemove">
             <Button variant="light" onClick={handleMinusQuantity}>
               -
             </Button>
-            <span>{quantity}</span>
+            <span>{product.quantity}</span>
             <Button variant="light" onClick={handleAddQuantity}>
               +
             </Button>
           </div>
-          <div className="cartItemPrice">${price}</div>
+          <div className="cartItemPrice">${product.price}</div>
         </div>
       </div>
       <div className="rightCart">
@@ -56,7 +63,7 @@ const CartItem = (props) => {
             +
           </Button>
         </div>
-        <div className="cartItemPrice">${price}</div>
+        <div className="cartItemPrice">${product.price}</div>
       </div>
     </Container>
   );
