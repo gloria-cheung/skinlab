@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Topbar from "../components/Topbar";
 import Announcement from "../components/Announcement";
@@ -13,25 +13,29 @@ import {
   Container,
 } from "react-bootstrap";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 import "./Login.scss";
 
 const Login = () => {
-  const [isFetching, setIsFetching] = useState(false);
-  const [error, setError] = useState(null);
   const email = useRef();
   const password = useRef();
   const history = useHistory();
+  const { isFetching, error, dispatch } = useContext(AuthContext);
 
   const clickHandler = async (e) => {
     try {
       e.preventDefault();
+
+      dispatch({ type: "LOGIN_START" });
       const res = await axios.post("/auth/login", {
         email: email.current.value,
         password: password.current.value,
       });
+
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
       history.push("/");
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      dispatch({ type: "LOGIN_FAILURE", payload: err.message });
     }
   };
 
