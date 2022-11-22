@@ -3,9 +3,27 @@ import { ShoppingCartOutlined, Search } from "@material-ui/icons";
 import "./Topbar.scss";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const Topbar = () => {
   const cart = useSelector((state) => state.cart);
+  const { currentUser, dispatch } = useContext(AuthContext);
+  const history = useHistory();
+
+  const clickHandler = async (e) => {
+    try {
+      e.preventDefault();
+
+      const res = await axios.post("/auth/logout");
+      dispatch({ type: "LOGOUT_SUCCESS", payload: res.data });
+      history.push("/");
+    } catch (err) {
+      dispatch({ type: "LOGOUT_FAILURE", payload: err.message });
+    }
+  };
 
   return (
     <Navbar
@@ -29,16 +47,34 @@ const Topbar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="w-100 justify-content-end">
-          <Link to="/register">
-            <Nav.Link as="span" href="#home">
-              Register
-            </Nav.Link>
-          </Link>
-          <Link to="/login">
-            <Nav.Link as="span" href="#link">
-              Sign In
-            </Nav.Link>
-          </Link>
+          {currentUser ? (
+            <>
+              <Nav.Link as="span" href="#link">
+                HI, {currentUser.first_name.toUpperCase()}!
+              </Nav.Link>
+              <Nav.Link
+                as="span"
+                onClick={clickHandler}
+                className="logoutButton"
+              >
+                Logout
+              </Nav.Link>
+            </>
+          ) : (
+            <>
+              <Link to="/register">
+                <Nav.Link as="span" href="#link">
+                  Register
+                </Nav.Link>
+              </Link>
+              <Link to="/login">
+                <Nav.Link as="span" href="#link">
+                  Sign In
+                </Nav.Link>
+              </Link>
+            </>
+          )}
+
           <Link to="/cart">
             <Nav.Link as="span" href="#link" className="shoppingCartContainer">
               <ShoppingCartOutlined />
