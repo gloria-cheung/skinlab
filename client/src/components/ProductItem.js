@@ -6,18 +6,11 @@ import {
 } from "@material-ui/icons";
 import "./ProductItem.scss";
 import { Link } from "react-router-dom";
-import { addProduct } from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
 
 const ProductItem = (props) => {
   const { img_url, id, price } = props;
-  const dispatch = useDispatch();
 
-  const handleClick = () => {
-    dispatch(
-      addProduct({ ...props, quantity: 1, size: "regular", price: price[1] })
-    );
-  };
+  const handleClick = () => {};
   return (
     <Col lg={3} className="p-1">
       <Card className="productItemContainer">

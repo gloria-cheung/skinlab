@@ -2,16 +2,15 @@ import { Nav, Navbar, Form, InputGroup } from "react-bootstrap";
 import { ShoppingCartOutlined, Search } from "@material-ui/icons";
 import "./Topbar.scss";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const Topbar = () => {
-  const cart = useSelector((state) => state.cart);
   const { currentUser, dispatch } = useContext(AuthContext);
   const history = useHistory();
+  const quantity = 0;
 
   const clickHandler = async (e) => {
     try {
@@ -78,7 +77,7 @@ const Topbar = () => {
           <Link to="/cart">
             <Nav.Link as="span" href="#link" className="shoppingCartContainer">
               <ShoppingCartOutlined />
-              <span className="badge">{cart.quantity}</span>
+              <span className="badge">{quantity}</span>
             </Nav.Link>
           </Link>
         </Nav>

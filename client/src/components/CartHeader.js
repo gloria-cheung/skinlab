@@ -1,10 +1,10 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./CartHeader.scss";
-import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const CartHeader = () => {
-  const quantity = useSelector((state) => state.cart.quantity);
+  const [quantity, setQuantity] = useState(0);
 
   return (
     <div className="cartHeader">
