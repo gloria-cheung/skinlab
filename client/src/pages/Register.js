@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useContext, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import Topbar from "../components/Topbar";
 import Announcement from "../components/Announcement";
@@ -12,12 +12,12 @@ import {
   Alert,
   Container,
 } from "react-bootstrap";
+import { AuthContext } from "../context/AuthContext";
 import "./Register.scss";
 import axios from "axios";
 
 const Register = () => {
-  const [isFetching, setIsFetching] = useState(false);
-  const [error, setError] = useState(null);
+  const { isFetching, error, dispatch } = useContext(AuthContext);
   const first_name = useRef();
   const last_name = useRef();
   const email = useRef();
@@ -33,15 +33,17 @@ const Register = () => {
       password.current.setCustomValidity("Passwords don't match");
     } else {
       try {
+        dispatch({ type: "REGISTER_START" });
         const res = await axios.post("/auth/register", {
           first_name: first_name.current.value,
           last_name: last_name.current.value,
           email: email.current.value,
           password: password.current.value,
         });
+        dispatch({ type: "REGISTER_SUCCESS", payload: res.data });
         history.push(`/`);
       } catch (e) {
-        console.log(e);
+        dispatch({ type: "REGISTER_FAILURE" });
       }
     }
   };
