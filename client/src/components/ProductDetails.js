@@ -1,16 +1,16 @@
 import { Container, Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 import "./ProductDetails.scss";
-import { addProduct } from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const { currentUser } = useContext(AuthContext);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,8 +34,20 @@ const ProductDetails = () => {
     setQuantity(newQuantity);
   };
 
-  const handleClick = () => {
-    // dispatch(addProduct({ ...product, quantity, size, price }));
+  const handleClick = async () => {
+    if (!currentUser) {
+      history.push("/login");
+    } else {
+      try {
+        const res = await axios.post("/cart_items", {
+          product_id: product.id,
+          quantity: quantity,
+        });
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   return (
