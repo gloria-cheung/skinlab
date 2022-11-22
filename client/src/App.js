@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 import Home from "./pages/Home";
 import ProductList from "./pages/ProductList";
 import Product from "./pages/Product";
@@ -8,6 +10,7 @@ import Cart from "./pages/Cart";
 import "./App.scss";
 
 function App() {
+  const { currentUser } = useContext(AuthContext);
   return (
     <Router>
       <Switch>
