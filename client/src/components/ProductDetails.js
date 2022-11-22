@@ -38,7 +38,6 @@ const ProductDetails = () => {
     // dispatch(addProduct({ ...product, quantity, size, price }));
   };
 
-  console.log(product);
   return (
     <Container className="d-flex mt-5 productDetailsContainer">
       {product && (

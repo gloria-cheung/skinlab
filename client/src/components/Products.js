@@ -26,7 +26,6 @@ const Products = (props) => {
     fetchData();
   }, [category]);
 
-  console.log(products);
   const sortHandler = (e) => {
     if (e.target.value === "new") {
       const sortedProducts = [...products].sort((p1, p2) => {
