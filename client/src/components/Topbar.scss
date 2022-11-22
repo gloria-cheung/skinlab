@@ -35,3 +35,9 @@
     }
   }
 }
+
+.logoutButton {
+  &:hover {
+    cursor: pointer;
+  }
+}
