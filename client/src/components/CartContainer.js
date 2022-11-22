@@ -1,15 +1,21 @@
 import { Container } from "react-bootstrap";
 import CartItem from "./CartItem";
-import { useSelector } from "react-redux";
 import "./CartContainer.scss";
 
-const CartContainer = () => {
-  const cart = useSelector((state) => state.cart);
+const CartContainer = (props) => {
+  const { cart, updateCart } = props;
 
   return (
     <Container>
-      {cart.products.length ? (
-        cart.products.map((item) => <CartItem {...item} key={item._id} />)
+      {cart && cart.cart_items.length ? (
+        cart.cart_items.map((item) => (
+          <CartItem
+            {...item}
+            product={item.product}
+            key={item.id}
+            updateCart={updateCart}
+          />
+        ))
       ) : (
         <h2 className="emptyCart">Your cart is currently empty.</h2>
       )}
