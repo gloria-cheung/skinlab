@@ -1,5 +1,3 @@
-import { useEffect, useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
 import { Card, Button } from "react-bootstrap";
 import "./OrderSummary.scss";
 
