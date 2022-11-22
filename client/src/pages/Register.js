@@ -41,9 +41,15 @@ const Register = () => {
           password: password.current.value,
         });
         dispatch({ type: "REGISTER_SUCCESS", payload: res.data });
-        history.push(`/`);
       } catch (e) {
         dispatch({ type: "REGISTER_FAILURE" });
+      }
+      try {
+        // create cart for new user
+        await axios.post("/cart");
+        history.push(`/`);
+      } catch (e) {
+        console.log(e);
       }
     }
   };

@@ -33,6 +33,13 @@ const Login = () => {
       });
 
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+
+      const res2 = await axios.get("/cart");
+      if (res2.data.error) {
+        // create cart if there is none that belongs to user with that id
+        axios.post("/cart");
+      }
+
       history.push("/");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.message });
