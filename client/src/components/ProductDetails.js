@@ -2,7 +2,8 @@ import { Container, Button } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/auth/AuthContext";
+import { CartContext } from "../context/cart/CartContext";
 import "./ProductDetails.scss";
 
 const ProductDetails = () => {
@@ -10,6 +11,7 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const { currentUser } = useContext(AuthContext);
+  const { cartDispatch } = useContext(CartContext);
   const history = useHistory();
 
   useEffect(() => {
@@ -38,14 +40,17 @@ const ProductDetails = () => {
     if (!currentUser) {
       history.push("/login");
     } else {
+      cartDispatch({ type: "ADD_TO_CART_START" });
+
       try {
         const res = await axios.post("/cart_items", {
           product_id: product.id,
           quantity: quantity,
         });
-        console.log(res.data);
+
+        cartDispatch({ type: "ADD_TO_CART_SUCCESS", payload: res.data });
       } catch (err) {
-        console.log(err);
+        cartDispatch({ type: "ADD_TO_CART_FAILURE", payload: err.message });
       }
     }
   };
