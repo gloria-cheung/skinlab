@@ -2,26 +2,30 @@ import { Nav, Navbar, Form, InputGroup } from "react-bootstrap";
 import { ShoppingCartOutlined, Search } from "@material-ui/icons";
 import "./Topbar.scss";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/auth/AuthContext";
+import { CartContext } from "../context/cart/CartContext";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const Topbar = () => {
   const { currentUser, dispatch } = useContext(AuthContext);
+  const { cart, cartDispatch } = useContext(CartContext);
   const history = useHistory();
-  const quantity = 0;
 
   const clickHandler = async (e) => {
-    try {
-      e.preventDefault();
+    e.preventDefault();
 
+    try {
       const res = await axios.post("/auth/logout");
       dispatch({ type: "LOGOUT_SUCCESS", payload: res.data });
       history.push("/");
     } catch (err) {
       dispatch({ type: "LOGOUT_FAILURE", payload: err.message });
     }
+
+    cartDispatch({ type: "DELETE_CART_SUCCESS" });
+    history.push("/");
   };
 
   return (
@@ -77,7 +81,7 @@ const Topbar = () => {
           <Link to="/cart">
             <Nav.Link as="span" href="#link" className="shoppingCartContainer">
               <ShoppingCartOutlined />
-              <span className="badge">{quantity}</span>
+              <span className="badge">{cart ? cart.cart_items.length : 0}</span>
             </Nav.Link>
           </Link>
         </Nav>
