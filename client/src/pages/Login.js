@@ -13,7 +13,8 @@ import {
   Container,
 } from "react-bootstrap";
 import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/auth/AuthContext";
+import { CartContext } from "../context/cart/CartContext";
 import "./Login.scss";
 
 const Login = () => {
@@ -21,6 +22,7 @@ const Login = () => {
   const password = useRef();
   const history = useHistory();
   const { isFetching, error, dispatch } = useContext(AuthContext);
+  const { cartDispatch } = useContext(CartContext);
 
   const clickHandler = async (e) => {
     try {
@@ -33,16 +35,23 @@ const Login = () => {
       });
 
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+    } catch (err) {
+      dispatch({ type: "LOGIN_FAILURE", payload: err.message });
+    }
 
-      const res2 = await axios.get("/cart");
+    try {
+      cartDispatch({ type: "CREATE_CART_START" });
+      let res2 = await axios.get("/cart");
       if (res2.data.error) {
         // create cart if there is none that belongs to user with that id
-        axios.post("/cart");
+        res2 = await axios.post("/cart");
       }
+
+      cartDispatch({ type: "CREATE_CART_SUCCESS", payload: res2.data });
 
       history.push("/");
     } catch (err) {
-      dispatch({ type: "LOGIN_FAILURE", payload: err.message });
+      cartDispatch({ type: "CREATE_CART_FAILURE", payload: err.message });
     }
   };
 
