@@ -12,12 +12,14 @@ import {
   Alert,
   Container,
 } from "react-bootstrap";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/auth/AuthContext";
+import { CartContext } from "../context/cart/CartContext";
 import "./Register.scss";
 import axios from "axios";
 
 const Register = () => {
   const { isFetching, error, dispatch } = useContext(AuthContext);
+  const { cartDispatch } = useContext(CartContext);
   const first_name = useRef();
   const last_name = useRef();
   const email = useRef();
@@ -44,12 +46,16 @@ const Register = () => {
       } catch (e) {
         dispatch({ type: "REGISTER_FAILURE" });
       }
+
       try {
+        cartDispatch({ type: "CREATE_CART_START" });
         // create cart for new user
-        await axios.post("/cart");
-        history.push(`/`);
-      } catch (e) {
-        console.log(e);
+        const res = await axios.post("/cart");
+        cartDispatch({ type: "CREATE_CART_SUCCESS", payload: res.data });
+
+        history.push("/");
+      } catch (err) {
+        cartDispatch({ type: "CREATE_CART_FAILURE", payload: err.message });
       }
     }
   };
