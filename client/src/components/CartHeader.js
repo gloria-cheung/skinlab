@@ -1,10 +1,9 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./CartHeader.scss";
-import { useState } from "react";
 
-const CartHeader = () => {
-  const [quantity, setQuantity] = useState(0);
+const CartHeader = (props) => {
+  const { quantity } = props;
 
   return (
     <div className="cartHeader">
