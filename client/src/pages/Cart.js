@@ -5,41 +5,20 @@ import OrderSummary from "../components/OrderSummary";
 import CartHeader from "../components/CartHeader";
 import CartContainer from "../components/CartContainer";
 import { Row, Col } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useContext } from "react";
+import { CartContext } from "../context/cart/CartContext";
 
 const Cart = () => {
-  const [cart, setCart] = useState();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("/cart");
-        setCart(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const updateCart = async () => {
-    try {
-      const res = await axios.get("/cart");
-      setCart(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const { cart } = useContext(CartContext);
 
   return (
     <>
       <Announcement />
       <Topbar />
-      <CartHeader />
+      {cart && <CartHeader quantity={cart.cart_items.length} />}
       <Row className="w-100">
         <Col md={8}>
-          <CartContainer cart={cart} updateCart={updateCart} />
+          <CartContainer cart={cart} />
         </Col>
         <Col md={4}>{cart && <OrderSummary total={cart.cart.total} />}</Col>
       </Row>
