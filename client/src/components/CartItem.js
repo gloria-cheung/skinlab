@@ -1,29 +1,56 @@
 import { Container, Button } from "react-bootstrap";
 import axios from "axios";
+import { CartContext } from "../context/cart/CartContext";
+import { useContext } from "react";
 import "./CartItem.scss";
 
 const CartItem = (props) => {
-  const { id, product, quantity, updateCart } = props;
+  const { id, product, quantity } = props;
+  const { cartDispatch } = useContext(CartContext);
 
   const handleAddQuantity = async () => {
+    cartDispatch({ type: "UPDATE_CART_START" });
     try {
       await axios.patch(`/cart_items/${id}`, {
         quantity: quantity + 1,
       });
-      updateCart();
+      cartDispatch({
+        type: "UPDATE_CART_SUCCESS",
+        payload: { id: id, quantity: quantity + 1, price: product.price },
+      });
     } catch (err) {
-      console.log(err);
+      cartDispatch({ type: "UPDATE_CART_FAILURE", payload: err.message });
     }
   };
 
   const handleMinusQuantity = async () => {
-    try {
-      await axios.patch(`/cart_items/${id}`, {
-        quantity: quantity - 1,
-      });
-      updateCart();
-    } catch (err) {
-      console.log(err);
+    if (quantity - 1 === 0) {
+      cartDispatch({ type: "DELETE_FROM_CART_START" });
+      try {
+        await axios.delete(`/cart_items/${id}`);
+        cartDispatch({
+          type: "DELETE_FROM_CART_SUCCESS",
+          payload: { id: id, price: product.price },
+        });
+      } catch (err) {
+        cartDispatch({
+          type: "DELETE_FROM_CART_FAILURE",
+          payload: err.message,
+        });
+      }
+    } else {
+      cartDispatch({ type: "UPDATE_CART_START" });
+      try {
+        await axios.patch(`/cart_items/${id}`, {
+          quantity: quantity - 1,
+        });
+        cartDispatch({
+          type: "UPDATE_CART_SUCCESS",
+          payload: { id: id, quantity: quantity - 1, price: product.price },
+        });
+      } catch (err) {
+        cartDispatch({ type: "UPDATE_CART_FAILURE", payload: err.message });
+      }
     }
   };
 
