@@ -1,0 +1,12 @@
+.payButton {
+  background-color: #8a817c;
+  color: white;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-radius: 0.5em;
+  border: none;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
