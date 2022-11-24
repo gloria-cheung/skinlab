@@ -20,7 +20,9 @@ const OrderSummary = (props) => {
     handleShow();
 
     try {
-      const res = await axios.post("/create-checkout-session");
+      const res = await axios.post("/create-checkout-session", {
+        amount: total * 100,
+      });
       setClientSecret(res.data.clientSecret);
     } catch (err) {
       console.log(err.message);
@@ -71,7 +73,7 @@ const OrderSummary = (props) => {
       </Card>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Checkout</Modal.Title>
+          <Modal.Title>Total: ${total}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {clientSecret && (
