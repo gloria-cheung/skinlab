@@ -27,9 +27,11 @@ const Categories = () => {
 
   const categories_data =
     categories.length &&
-    categories.map((item) => (
-      <CategoryItem key={item.id} {...item} img={category_imgs[item.id]} />
-    ));
+    categories
+      .filter((item) => item.name !== "featured")
+      .map((item) => (
+        <CategoryItem key={item.id} {...item} img={category_imgs[item.id]} />
+      ));
 
   return (
     <Container className="mt-5 mb-5">
