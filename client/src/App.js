@@ -5,6 +5,7 @@ import Product from "./pages/Product";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Cart from "./pages/Cart";
+import Success from "./pages/Success";
 import "./App.scss";
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route path="/cart">
           <Cart />
+        </Route>
+        <Route path="/success">
+          <Success />
         </Route>
       </Switch>
     </Router>
