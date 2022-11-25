@@ -18,7 +18,7 @@ const Order = () => {
         await axios.patch("/cart");
         cartDispatch({ type: "DELETE_CART_SUCCESS" });
       } catch (err) {
-        console.log(err);
+        console.log(err.message);
       }
     };
 
@@ -27,7 +27,7 @@ const Order = () => {
         const res = await axios.get(`/orders/${order_id}`);
         setOrder(res.data);
       } catch (err) {
-        console.log(err);
+        console.log(err.message);
       }
     };
 
