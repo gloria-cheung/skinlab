@@ -53,6 +53,18 @@ const Login = () => {
     } catch (err) {
       cartDispatch({ type: "CREATE_CART_FAILURE", payload: err.message });
     }
+
+    try {
+      let res2 = await axios.get("/wishlist");
+      if (res2.data.error) {
+        // create wishlist if there is none that belongs to user with that id
+        res2 = await axios.post("/wishlist");
+      }
+
+      history.push("/");
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   return (
