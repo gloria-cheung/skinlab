@@ -33,6 +33,9 @@ function App() {
         <Route path="/success">
           <Success />
         </Route>
+        <Route path="/wishlist">
+          <ProductList />
+        </Route>
       </Switch>
     </Router>
   );
