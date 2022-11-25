@@ -4,7 +4,7 @@ import "./Topbar.scss";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth/AuthContext";
 import { CartContext } from "../context/cart/CartContext";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
@@ -12,6 +12,7 @@ const Topbar = () => {
   const { currentUser, dispatch } = useContext(AuthContext);
   const { cart, cartDispatch } = useContext(CartContext);
   const history = useHistory();
+  const productName = useRef();
 
   const clickHandler = async (e) => {
     e.preventDefault();
@@ -28,6 +29,19 @@ const Topbar = () => {
     history.push("/");
   };
 
+  const searchHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.get(
+        `/products?name=${productName.current.value}`
+      );
+      history.push(`/product?product_id=${res.data.id}`);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   return (
     <Navbar
       bg="dark"
@@ -39,12 +53,16 @@ const Topbar = () => {
       <Link to="/">
         <Navbar.Brand>SKIN LAB.</Navbar.Brand>
       </Link>
-      <Form className="w-50">
+      <Form className="w-50" onSubmit={searchHandler}>
         <InputGroup className="searchBar">
           <InputGroup.Text id="basic-addon1">
             <Search />
           </InputGroup.Text>
-          <Form.Control placeholder="search" aria-describedby="basic-addon1" />
+          <Form.Control
+            placeholder="search"
+            aria-describedby="basic-addon1"
+            ref={productName}
+          />
         </InputGroup>
       </Form>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
