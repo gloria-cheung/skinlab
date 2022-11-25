@@ -1,5 +1,5 @@
 import { Container, Button, Alert } from "react-bootstrap";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/auth/AuthContext";
@@ -12,7 +12,8 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState(null);
   const [show, setShow] = useState(false);
-  const { id } = useParams();
+  const search = useLocation().search;
+  const product_id = new URLSearchParams(search).get("product_id");
   const { currentUser } = useContext(AuthContext);
   const { cartDispatch } = useContext(CartContext);
   const history = useHistory();
@@ -20,14 +21,14 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/products/${id}`);
+        const res = await axios.get(`/products?product_id=${product_id}`);
         setProduct(res.data);
       } catch (err) {
         console.log(err.message);
       }
     };
     fetchData();
-  }, [id]);
+  }, [product_id]);
 
   const handleAddQuantity = () => {
     const newQuantity = quantity + 1;
