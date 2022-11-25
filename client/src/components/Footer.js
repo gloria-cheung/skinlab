@@ -4,9 +4,14 @@ import {
   MailOutlined,
   LocationOnOutlined,
 } from "@material-ui/icons";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../context/auth/AuthContext";
+import { useContext } from "react";
 import "./Footer.scss";
 
 const Footer = () => {
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <footer className="footer">
       <div className="descriptionContainer">
@@ -54,10 +59,10 @@ const Footer = () => {
               My Account
             </ListGroup.Item>
             <ListGroup.Item as="li" className="border-0 ps-0 linkListItem">
-              Wishlist
+              <Link to={currentUser ? "/wishlist" : "/login"}>Wishlist</Link>
             </ListGroup.Item>
             <ListGroup.Item as="li" className="border-0 ps-0 linkListItem">
-              Cart
+              <Link to={currentUser ? "/cart" : "/login"}>Cart</Link>
             </ListGroup.Item>
             <ListGroup.Item as="li" className="border-0 ps-0 linkListItem">
               Order Tracking
