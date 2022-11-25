@@ -91,7 +91,7 @@ const ProductItem = (props) => {
             className="productItemIcon"
             onClick={handleClick}
           />
-          <Link to={`/product/${id}`}>
+          <Link to={`/product?product_id=${id}`}>
             <Search className="productItemIcon" />
           </Link>
         </div>
