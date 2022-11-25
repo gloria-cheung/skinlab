@@ -52,10 +52,15 @@ const Register = () => {
         // create cart for new user
         const res = await axios.post("/cart");
         cartDispatch({ type: "CREATE_CART_SUCCESS", payload: res.data });
-
-        history.push("/");
       } catch (err) {
         cartDispatch({ type: "CREATE_CART_FAILURE", payload: err.message });
+      }
+
+      try {
+        await axios.post("/wishlist");
+        history.push("/");
+      } catch (err) {
+        console.log(err.message);
       }
     }
   };
