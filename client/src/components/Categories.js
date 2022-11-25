@@ -12,7 +12,7 @@ const Categories = () => {
         const res = await axios.get("/categories");
         setCategories(res.data.categories);
       } catch (err) {
-        console.log(err);
+        console.log(err.message);
       }
     };
 

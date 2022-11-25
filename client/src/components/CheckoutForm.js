@@ -57,7 +57,6 @@ export default function CheckoutForm() {
     setIsLoading(true);
 
     const res = await axios.post("/orders");
-    console.log(res.data);
 
     const { error } = await stripe.confirmPayment({
       elements,
