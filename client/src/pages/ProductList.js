@@ -4,11 +4,13 @@ import Products from "../components/Products";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 const ProductList = () => {
+  const path = window.location.pathname.slice(1);
+
   return (
     <>
       <Announcement />
       <Topbar />
-      <Products />
+      <Products path={path} />
       <Newsletter />
       <Footer />
     </>
