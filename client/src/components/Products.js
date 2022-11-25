@@ -1,30 +1,44 @@
 import { useEffect, useState } from "react";
-import { Row } from "react-bootstrap";
+import { Row, Alert } from "react-bootstrap";
 import ProductItem from "./ProductItem";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import "./Products.scss";
 
 const Products = (props) => {
-  const { home } = props;
+  const { home, path } = props;
   const { category } = useParams();
   const [products, setProducts] = useState([]);
+  const [show, setShow] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = category
-          ? await axios.get(`/categories/${category}`)
-          : await axios.get("/categories/featured");
+        let res;
+        if (path === "wishlist") {
+          res = await axios.get("/wishlist");
+          const productsList = res.data.wishlist_items.map((item) => {
+            let result = item.product;
+            result.wishlist_item_id = item.id;
+            return result;
+          });
 
-        setProducts(res.data.products);
+          setProducts(productsList);
+        } else {
+          res = category
+            ? await axios.get(`/categories/${category}`)
+            : await axios.get("/categories/featured");
+
+          setProducts(res.data.products);
+        }
       } catch (err) {
-        console.log(err);
+        console.log(err.message);
       }
     };
 
     fetchData();
-  }, [category]);
+  }, [category, path]);
 
   const sortHandler = (e) => {
     if (e.target.value === "new") {
@@ -49,9 +63,9 @@ const Products = (props) => {
     <>
       {home ? (
         <h2 className="basicHeader">Featured Items</h2>
-      ) : (
+      ) : category ? (
         <header className="productsPageHeader">
-          <h2 className="basicHeader">Acne</h2>
+          <h2 className="basicHeader">{category}</h2>
           <div id="filterSortContainer">
             <div className="leftContainer">
               <h5>Filter Products:</h5>
@@ -83,10 +97,30 @@ const Products = (props) => {
             </div>
           </div>
         </header>
+      ) : (
+        <h2 className="basicHeader">Wishlist</h2>
+      )}
+      {show && (
+        <Alert
+          className="text-center"
+          variant="dark"
+          onClose={() => setShow(false)}
+          dismissible
+        >
+          {message}
+        </Alert>
       )}
       <Row className="ms-1 me-1">
         {products &&
-          products.map((item) => <ProductItem key={item.id} {...item} />)}
+          products.map((item) => (
+            <ProductItem
+              key={item.id}
+              {...item}
+              setShow={setShow}
+              setMessage={setMessage}
+              path={path}
+            />
+          ))}
       </Row>
     </>
   );
