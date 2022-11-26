@@ -55,6 +55,7 @@ Skinlab is a skincare e-commerce app that allows users to browse and purchase sk
 - SQLAlchemy
 - dotenv
 - werkzeug
+- stripe
 
 ## Connect With Me
 
